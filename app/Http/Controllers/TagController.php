@@ -6,11 +6,16 @@ use Illuminate\Http\Request;
 use App\Post;
 use App\Category;
 use App\Tag;
-use TCG\Voyager\Models\User; //If you are using Voyager
+
 
 class TagController extends Controller
 {
 	
+	/**
+	* Generate view for tag page
+	*
+	* @return template string
+	*/
 	public function index($slug)
 	{
 	    //get the requested tag

@@ -8,11 +8,17 @@ use App\Post;
 use App\Category;
 use App\Tag;
 use App\Comment;
-use TCG\Voyager\Models\User; //If you are using Voyager
+
 use Auth;
 
 class PostController extends Controller
 {
+	 /**
+     * Generate view data for home page
+     *
+     * @param  string $slug
+     * @return template string
+     */
     public function index($slug)
 	{
 	    //get the requested post, if it is published
@@ -40,6 +46,12 @@ class PostController extends Controller
 	    ));
 	}
 
+	/**
+	* Execute deletion for post
+	*
+	* @param  int $slug
+	* @return redirect
+	*/
 	public function delete($slug)
 	{
 		$post = Post::where('id', $slug);
@@ -47,6 +59,13 @@ class PostController extends Controller
 		//dd($post);
 		return redirect(route('post.list'));
 	}
+
+	/**
+	* Generate view for post form
+	*
+	* @param  int $slug
+	* @return template string
+	*/
 
 	public function form($slug = '')
 	{
@@ -74,6 +93,12 @@ class PostController extends Controller
 	    ));
 	}
 
+	/**
+	* Generate view for post list
+	*
+	* @return redirect
+	*/
+
 	public function list()
 	{
 	  
@@ -84,6 +109,12 @@ class PostController extends Controller
 
 	}
 
+	/**
+	* Get post data and save it
+	*
+	* @param  int $slug
+	* @return template string
+	*/
 	public function store(Request $request)
     {
     	$request->validate([
@@ -95,19 +126,20 @@ class PostController extends Controller
         ]);
    
         $input = $request->all();
-        $input['user_id'] = Auth::user() ? auth()->user()->id : 0;
-        $input['is_published'] = 1;
-    
+        $input['user_id'] = Auth::user()->id;
+        $input['is_published'] = 1; //at the moment no button, so we set it manually    
     	 
-	    $post = Post::where('slug', '=', $input['slug'])->first();
+    	//get post from database
+	    $post = Post::where('id', '=', $input['id'])->first();
 	    
+	    //save image if there is one
 	    if($request->featured_image){
 		    $imageName = time().'.'.$request->featured_image->extension(); 	   
-	        $request->featured_image->move($tmp = storage_path('app/public/images'), $imageName);
-	       
+	        $request->featured_image->move($tmp = storage_path('app/public/images'), $imageName);	       
 	        $input['featured_image'] = 'images/'.$imageName;
 	    }
 
+	    //save video if there is one
 	    if($request->featured_video){
 		    $fileName = time().'.'.$request->featured_video->extension(); 	   
 	        $request->featured_video->move($tmp = storage_path('app/public/videos'), $fileName);
@@ -115,18 +147,19 @@ class PostController extends Controller
 	        $input['featured_video'] = 'videos/'.$fileName;
 	    }
 
-	    //dd($input);
+	    //save post 
 	    if ($post != null) {
 	        $post->update($input);
 	    } else {
         	$post = Post::create($input);
         }
          
+        //save tags
+
         $tagsNames = explode(',', $request->get('tags'));
         $tagsNames = array_map('trim', $tagsNames);
         $tagsNames = array_filter($tagsNames);
-        //dd($tagsNames);
-	    // Create all tags (unassociet)
+        
 	    foreach($tagsNames as $tagName){
 	    	
 	    	$tag = Tag::where('slug', '=', str_slug($tagName))->first();
@@ -139,9 +172,12 @@ class PostController extends Controller
 	        }       
 	        
 	    }
+
+	    //sync relations
    		if(isset($tags)){
    			$post->tags()->sync(array_unique($tags));
    		}
+
         return redirect(route('post.edit', $post->id))->withSuccess('Saved!');
     }
 }

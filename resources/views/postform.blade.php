@@ -15,8 +15,9 @@
                 <a class="btn btn-primary" href="{{ route('post.list') }}">{{ __('To list') }}</a>
             </div>
             <form method="post" action="{{ route('post.store') }}" enctype="multipart/form-data">
-            
+                
                 @csrf
+                <input type="hidden" name="id" value="{{ $post->id ?? '' }}">
                 <div class="form-group">
                     <input type="text" class="form-control" name="title" placeholder="{{ __('Title') }}" value="{{ $post->title ?? '' }}">
                 </div>

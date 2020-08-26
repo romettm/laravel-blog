@@ -6,10 +6,15 @@ use Illuminate\Http\Request;
 use App\Post;
 use App\Category;
 use App\Tag;
-use TCG\Voyager\Models\User; //If you are using Voyager
+
 
 class IndexController extends Controller
 {
+	/**
+	* Generate view for home page
+	*
+	* @return template string
+	*/
     public function index()
 	{
 	    //get the posts that are published, sort by decreasing order of "id".
@@ -34,6 +39,12 @@ class IndexController extends Controller
 	        'recent_posts' => $recent_posts
 	    ));
 	}
+
+	/**
+	* Generate view for search page
+	*
+	* @return template string
+	*/
 
 	public function search(Request $request)
 	{

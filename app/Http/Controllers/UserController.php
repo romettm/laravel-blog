@@ -8,19 +8,32 @@ use App\User;
 use App\Category;
 use App\Tag;
 use App\Comment;
-//use TCG\Voyager\Models\User; //If you are using Voyager
 use Auth;
 
 class UserController extends Controller
 {
     
-
+	/**
+	* Execute deletion for user
+	*
+	* @param  int $slug
+	* @return redirect
+	*/
+	
 	public function delete($slug)
 	{
+		if($slug and Auth::user()->id != $slug) abort(403);
 		$user = User::where('id', $slug);
 		$res = $user->delete();
 		return redirect(route('user.list'));
 	}
+
+	/**
+	* Generate view for user form
+	*
+	* @param  int $slug
+	* @return template string
+	*/
 
 	public function form($slug = '')
 	{
@@ -41,6 +54,12 @@ class UserController extends Controller
 
 	}
 
+	/**
+	* Generate view for post list
+	*
+	* @return redirect
+	*/
+
 	public function list()
 	{
 	  
@@ -51,10 +70,19 @@ class UserController extends Controller
 
 	}
 
+	/**
+	* Get user data and save it
+	*
+	* @param  int $slug
+	* @return template string
+	*/
+
 	public function store(Request $request)
     {
+    	//only allow to edit data for yourself
     	if($request->id and Auth::user()->id != $request->id) abort(403);
 
+    	//validations
     	$this->validate(request(), [
             'name' => 'required',
             'email' => 'email|required|unique:users,email,'.$request->id,
@@ -65,9 +93,12 @@ class UserController extends Controller
 	    
 	    $input['name'] = $request->name;
         $input['email'] = $request->email;
+        //if password was submitted then encrypt it
         if($request->password){
       		$input['password'] = bcrypt($request->password);
       	}
+
+      	//update if exists, or create
 	    if ($user != null) {
 	        $user->update($input);
 	    } else {

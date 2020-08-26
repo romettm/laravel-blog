@@ -6,11 +6,16 @@ use Illuminate\Http\Request;
 use App\Post;
 use App\Category;
 use App\Tag;
-use TCG\Voyager\Models\User; //If you are using Voyager
+
 
 class CategoryController extends Controller
 {   
 
+	/**
+	* Generate view for category page
+	*
+	* @return template string
+	*/
 	public function index($slug)
 	{
 	    //get the requested category
@@ -18,7 +23,6 @@ class CategoryController extends Controller
 
 	    //get the posts in that category
 	    $posts = $category->posts();
-	   
 	    
 	    //get all the categories
 	    $categories = Category::all();

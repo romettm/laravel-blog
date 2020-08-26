@@ -21,6 +21,7 @@ class CommentController extends Controller
         ]);
    
         $input = $request->all();
+        //If no auth then user_id 0
         $input['user_id'] = Auth::user() ? auth()->user()->id : 0;
     
         Comment::create($input);
