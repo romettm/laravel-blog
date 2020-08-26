@@ -10,7 +10,7 @@
 
             @if(Route::currentRouteName() != 'user.list')
             <div class="d-flex justify-content-between mb-4">
-                <h4>{{Route::currentRouteName() == 'user.add' ? __('Add user') : __('Edit user') }}</h4>
+                <h4>{{Route::currentRouteName() == 'user.new' ? __('Add user') : __('Edit user') }}</h4>
                 <a class="btn btn-primary" href="{{ route('user.list') }}">{{ __('To list') }}</a>
             </div>
 

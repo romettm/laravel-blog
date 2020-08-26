@@ -19,7 +19,7 @@ class UserController extends Controller
 	* @param  int $slug
 	* @return redirect
 	*/
-	
+
 	public function delete($slug)
 	{
 		if($slug and Auth::user()->id != $slug) abort(403);
@@ -101,11 +101,13 @@ class UserController extends Controller
       	//update if exists, or create
 	    if ($user != null) {
 	        $user->update($input);
+	        return redirect(route('user.edit', $user->id))->withSuccess('Saved!');
 	    } else {
         	$user = User::create($input);
+        	return redirect(route('user.list'));
         }
 
-        return redirect(route('user.edit', $user->id))->withSuccess('Saved!');
+        
     }
 }
 

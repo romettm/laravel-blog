@@ -11,7 +11,8 @@
             @if(Route::currentRouteName() != 'post.list')
 
             <div class="d-flex justify-content-between mb-4">
-                <h4>{{Route::currentRouteName() == 'post.add' ? __('Add post') : __('Edit post') }}</h4>
+
+                <h4>{{ Route::currentRouteName() == 'post.new' ? __('Add post') : __('Edit post') }}</h4>
                 <a class="btn btn-primary" href="{{ route('post.list') }}">{{ __('To list') }}</a>
             </div>
             <form method="post" action="{{ route('post.store') }}" enctype="multipart/form-data">
