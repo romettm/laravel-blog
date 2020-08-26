@@ -3,8 +3,9 @@
 use App\Task;
 use Illuminate\Http\Request;
 
-Auth::routes();
 
+
+Auth::routes(['register' => false]);
 
 Route::get('/', 'IndexController@index');
 Route::get('/home', 'IndexController@index');

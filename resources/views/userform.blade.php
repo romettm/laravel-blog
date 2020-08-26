@@ -56,7 +56,7 @@
                     @foreach($ds as $r)
                     <tr>
                         <td>{{$r->name}}</td>
-                        <td>{{$r->updated_at ? $r->updated_at->format('d.m.Y') : $r->created_at->format('d.m.Y')}}</td>
+                        <td>{{ Carbon\Carbon::parse($r->updated_at ?? $r->created_at ?? null)->format('d.m.Y')}}</td>
                         <td class="text-nowrap">
                             @if(Auth::user()->id == $r->id)
                             <a class="btn btn-sm btn-primary" href="{{ route('user.edit', $r->id) }}">{{ __('Edit') }}</a>
