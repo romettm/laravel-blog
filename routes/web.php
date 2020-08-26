@@ -14,7 +14,7 @@ Route::get('search', 'IndexController@search');
 Route::get('category/{slug}', 'CategoryController@index');
 Route::get('tag/{slug}', 'TagController@index');
 Route::get('post/{slug}', 'PostController@index');
-Route::post('comment/store', 'commentController@store')->name('comment.store');
+Route::post('comment/store', 'CommentController@store')->name('comment.store');
 
 Route::group(['middleware' => 'auth'], function() {
 
