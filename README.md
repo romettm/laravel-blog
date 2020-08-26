@@ -34,4 +34,10 @@ If you feel like forking it, go ahead!
 - Import database by running: php artisan migrate
 - Generate key for laravel: php artisan key:generate 
 
+Default user login: 
+email: root@root.com
+password: xrootx
+
+Have fun!
+
 
