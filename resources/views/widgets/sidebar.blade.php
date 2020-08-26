@@ -3,20 +3,21 @@
 
     <!-- Search Widget -->
     <div class="card my-4">
-        <h5 class="card-header">Search</h5>
-        <div class="card-body">
+        <h5 class="card-header">{{ __('Search') }}</h5>
+        <form class="card-body" action="{{url('/search')}}" method="GET" role="search">
+            {{ csrf_field() }}
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search for...">
-                <span class="input-group-btn">
-                <button class="btn btn-secondary" type="button">Go!</button>
-              </span>
+                <input type="text" class="form-control" placeholder="{{ __('Search for ...') }}" name="q">
+                <span class="input-group-append">
+                    <button class="btn btn-secondary" type="submit">{{ __('Go!') }}</button>
+                </span>
             </div>
-        </div>
+        </form>
     </div>
 
     <!-- Categories Widget -->
     <div class="card my-4">
-        <h5 class="card-header">Categories</h5>
+        <h5 class="card-header">{{ __('Categories') }}</h5>
         <div class="card-body">
             <div class="row">
                 <div class="col-lg-6">
@@ -34,7 +35,7 @@
 
     <!-- Tags Widget -->
     <div class="card my-4">
-        <h5 class="card-header">Tags</h5>
+        <h5 class="card-header">{{ __('Tags') }}</h5>
         <div class="card-body">
             <div class="row">
                 <div class="col-lg-6">
@@ -71,9 +72,9 @@
 
     <!-- Side Widget -->
     <div class="card my-4">
-        <h5 class="card-header">Info</h5>
+        <h5 class="card-header">{{ __('About') }}</h5>
         <div class="card-body">
-            See on test blogi
+            {{ __('This blog was created for demo purposes and learning experience.') }}
         </div>
     </div>
 

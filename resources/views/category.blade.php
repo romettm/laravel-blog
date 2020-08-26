@@ -1,11 +1,12 @@
 @extends('master')
 
 @section('content')
+<main class="py-4 container">
     <div class="row">
         <!-- Blog Entries Column -->
         <div class="col-md-8">
 
-            <h1 class="my-4">Category:
+            <h1 class="my-4">{{ __('Category:') }}
                 <small>{{$category->name}}</small>
             </h1>
 
@@ -14,5 +15,6 @@
         </div>
         @include('widgets.sidebar')
     </div>
+</main>
 
 @endsection

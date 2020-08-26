@@ -13,7 +13,7 @@ class Post extends Model
 	    'content',
 	    'slug',
 	    'featured_image',
-	    'is_featured',
+	    'featured_video',
 	    'is_published'
 	];
 
@@ -36,6 +36,11 @@ class Post extends Model
 	public function tags()
 	{
 	    return $this->belongsToMany('App\Tag');
+	}
+
+	public function comments()
+	{
+	    return $this->hasMany('App\Comment');
 	}
 
 }

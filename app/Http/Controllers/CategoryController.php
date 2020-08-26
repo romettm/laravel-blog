@@ -18,6 +18,7 @@ class CategoryController extends Controller
 
 	    //get the posts in that category
 	    $posts = $category->posts();
+	   
 	    
 	    //get all the categories
 	    $categories = Category::all();
